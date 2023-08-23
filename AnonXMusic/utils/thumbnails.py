@@ -117,8 +117,8 @@ async def get_thumb(videoid):
                 draw.text(((1280 - text_w)/2, 580), f"{para[1]}", fill="white", stroke_width=1, stroke_fill="white", font=font)
         except:
             pass
-        text_w, text_h = draw.textsize(f"Duration: {duration} Mins {channel} | {views[:23]}", font=arial)
-        draw.text(((1280 - text_w)/2, 660), f"Duration: {duration} Mins {channel} | {views[:23]}", fill="white", font=arial)
+        text_w, text_h = draw.textsize(f"{channel}  |  {views[:23]}", font=arial)
+        draw.text(((1280 - text_w)/2, 660), f"{channel}  |  {views[:23]}", fill="white", font=arial)
         draw.line(
             [(55, 660), (1220, 660)],
             fill="white",
