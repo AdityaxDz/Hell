@@ -102,7 +102,7 @@ async def get_thumb(videoid):
             os.remove(f"cache/thumb{videoid}_{anime}.png")
         except:
             pass
-        background.save(f"cache/{videoid}.png")
+        background.save(f"cache/{videoid}_{anime}.png")
         return f"cache/{videoid}.png"
     except Exception as e:
         print(e)
