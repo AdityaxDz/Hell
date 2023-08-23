@@ -110,10 +110,10 @@ async def get_thumb(videoid):
         try:
             if para[0]:
                 text_w, text_h = draw.textsize(f"{para[0]}", font=font)
-                draw.text(((1280 - text_w)/2, 530), f"{para[0]}", fill="white", stroke_width=1, stroke_fill="white", font=font)
+                draw.text(((1280 - text_w)/2, 540), f"{para[0]}", fill="white", stroke_width=1, stroke_fill="white", font=font)
             if para[1]:
                 text_w, text_h = draw.textsize(f"{para[1]}", font=font)
-                draw.text(((1280 - text_w)/2, 580), f"{para[1]}", fill="white", stroke_width=1, stroke_fill="white", font=font)
+                draw.text(((1280 - text_w)/2, 590), f"{para[1]}", fill="white", stroke_width=1, stroke_fill="white", font=font)
         except:
             pass
         text_w, text_h = draw.textsize(f"{channel}  |  {views[:23]}", font=arial)
