@@ -107,7 +107,6 @@ async def get_thumb(videoid):
         name_font = ImageFont.truetype("AnonXMusic/assets/font.ttf", 30)
         para = textwrap.wrap(title, width=32)
         j = 0
-        draw.text((70, 70), f"TeamAyra", fill="white", font=name_font)
         try:
             if para[0]:
                 text_w, text_h = draw.textsize(f"{para[0]}", font=font)
