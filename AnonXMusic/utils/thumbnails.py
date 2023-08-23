@@ -8,7 +8,7 @@ import aiohttp
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps, ImageChops
 from youtubesearchpython.__future__ import VideosSearch
 
-from config import MUSIC_BOT_NAME, YOUTUBE_IMG_URL
+from config import YOUTUBE_IMG_URL
 from back import files
 
 def changeImageSize(maxWidth, maxHeight, image):
@@ -29,7 +29,7 @@ def add_corners(im):
     im.putalpha(mask)
 
 
-async def gen_thumb(videoid):
+async def get_thumb(videoid):
     anime = random.choice(files)
     if os.path.isfile(f"cache/{videoid}_{anime}.png"):
         return f"cache/{videoid}_{anime}.png"
@@ -101,10 +101,10 @@ async def gen_thumb(videoid):
 
 
         draw = ImageDraw.Draw(background)
-        font = ImageFont.truetype("assets/font2.ttf", 45)
-        font2 = ImageFont.truetype("assets/font2.ttf", 70)
-        arial = ImageFont.truetype("assets/font2.ttf", 30)
-        name_font = ImageFont.truetype("assets/font.ttf", 30)
+        font = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 45)
+        font2 = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 70)
+        arial = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 30)
+        name_font = ImageFont.truetype("AnonXMusic/assets/font.ttf", 30)
         para = textwrap.wrap(title, width=32)
         j = 0
         try:
