@@ -29,7 +29,7 @@ def add_corners(im):
     im.putalpha(mask)
 
 
-async def gen_thumb(videoid):
+async def get_thumb(videoid):
     anime = random.choice(files)
     if os.path.isfile(f"cache/{videoid}_{anime}.png"):
         return f"cache/{videoid}_{anime}.png"
@@ -134,7 +134,7 @@ async def gen_thumb(videoid):
 
 
 
-async def gen_qthumb(videoid):
+async def get_qthumb(videoid):
     anime = random.choice(files)
     if os.path.isfile(f"cache/q{videoid}_{anime}.png"):
         return f"cache/q{videoid}_{anime}.png"
