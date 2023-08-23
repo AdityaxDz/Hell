@@ -8,6 +8,7 @@ import aiofiles
 import aiohttp
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 from youtubesearchpython.__future__ import VideosSearch
+from back import files
 
 from config import YOUTUBE_IMG_URL
 
@@ -22,8 +23,9 @@ def changeImageSize(maxWidth, maxHeight, image):
 
 
 async def get_thumb(videoid):
-    if os.path.isfile(f"cache/{videoid}.png"):
-        return f"cache/{videoid}.png"
+    anime = random.choice(files)
+    if os.path.isfile(f"cache/{videoid}_{anime}.png"):
+        return f"cache/{videoid}_{anime}.png"
 
     url = f"https://www.youtube.com/watch?v={videoid}"
     try:
@@ -57,6 +59,7 @@ async def get_thumb(videoid):
                     await f.close()
 
         youtube = Image.open(f"cache/thumb{videoid}.png")
+        bg = Image.open(f"back/{anime}.PNG")
         image1 = changeImageSize(1280, 720, youtube)
         image2 = image1.convert("RGBA")
         background = image2.filter(filter=ImageFilter.BoxBlur(30))
@@ -96,7 +99,7 @@ async def get_thumb(videoid):
 
         
         try:
-            os.remove(f"cache/thumb{videoid}.png")
+            os.remove(f"cache/thumb{videoid}_{anime}.png")
         except:
             pass
         background.save(f"cache/{videoid}.png")
