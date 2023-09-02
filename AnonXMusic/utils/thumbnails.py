@@ -70,7 +70,7 @@ async def get_thumb(videoid):
         bg = Image.open(f"back/{anime}.PNG")
         image1 = changeImageSize(1280, 720, youtube)
         image2 = image1.convert("RGBA")
-        background = image2.filter(filter=ImageFilter.BoxBlur(0))
+        background = image2.filter(filter=ImageFilter.BoxBlur(14))
         enhancer = ImageEnhance.Brightness(background)
         background = enhancer.enhance(0.6)
 
@@ -94,10 +94,10 @@ async def get_thumb(videoid):
 
         crop_img = Image.open(f"cache/cropped{videoid}.png")
         logo = crop_img.convert("RGBA")
-        logo.thumbnail((1, 1), Image.ANTIALIAS)
-        width = int((1280 - 1)/ 2)
+        logo.thumbnail((365, 365), Image.ANTIALIAS)
+        width = int((1280 - 999)/ 2)
         background = Image.open(f"cache/temp{videoid}.png")
-        background.paste(logo, (width + 2, 134), mask=logo)
+        background.paste(logo, (width + 2, 180), mask=logo)
 
 
         draw = ImageDraw.Draw(background)
@@ -109,49 +109,32 @@ async def get_thumb(videoid):
         j = 0
         try:
             if para[0]:
-                text_w, text_h = draw.textsize(f"{para[0]}", font=font)
-                draw.text(((1280 - text_w)/2, 540), f"{para[0]}", fill="white", stroke_width=1, stroke_fill="white", font=font)
+                draw.text(((1280 - 150)/2, 190), f"{para[0]}", fill="white", stroke_width=1, stroke_fill="white", font=font)
             if para[1]:
-                text_w, text_h = draw.textsize(f"{para[1]}", font=font)
-                draw.text(((1280 - text_w)/2, 590), f"{para[1]}", fill="white", stroke_width=1, stroke_fill="white", font=font)
+                draw.text(((1280 - 150)/2, 240), f"{para[1]}", fill="white", stroke_width=1, stroke_fill="white", font=font)
         except:
             pass
-        text_w, text_h = draw.textsize(f"{channel}  |  {views[:23]}", font=arial)
-        draw.text(((1280 - text_w)/2, 670), f"{channel}  |  {views[:23]}", fill="white", font=arial)
-        draw.line(
-            [(55, 660), (1220, 660)],
-            fill="white",
-            width=5,
-            joint="curve",
-        )
-        draw.ellipse(
-            [(918, 648), (942, 672)],
-            outline="white",
-            fill="white",
-            width=15,
-        )
+        draw.text(((1280 - 150)/2, 320), f"{channel}  |  {views[:30]}", fill="white", font=arial)
         draw.text(
-            (36, 680),
+            (565, 400),
             "00:00",
-            (255, 255, 255),
+            (215, 215, 215),
             font=arial,
         )
         draw.text(
-            (1185, 680),
-            f"{duration[:23]}",
-            (255, 255, 255),
+            (1080, 400),
+            f"{duration[:30]}",
+            (215, 215, 215),
             font=arial,
         )
 
 
-
-        
         try:
             os.remove(f"cache/thumb{videoid}.png")
         except:
             pass
-        background.save(f"cache/{videoid}_{anime}.png")
-        return f"cache/{videoid}_{anime}.png"
+        background.save(f"cache/q{videoid}_{anime}.png")
+        return f"cache/q{videoid}_{anime}.png"
     except Exception as e:
         print(e)
         return YOUTUBE_IMG_URL
