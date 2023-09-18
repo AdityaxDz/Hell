@@ -65,7 +65,11 @@ class YouTubeAPI:
                         return entity.url
         if offset in (None,):
             return None
-        return text[offset : offset + length]
+
+        umm = text[offset : offset + length]
+        if "?si=" in umm:
+            umm = umm.split("?si=")[0]
+        return umm
 
     async def details(self, link: str, videoid: Union[bool, str] = None):
         if videoid:
