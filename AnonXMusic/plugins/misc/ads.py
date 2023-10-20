@@ -11,7 +11,7 @@ from AnonXMusic.utils.database import get_served_chats
 
 
 ad = """
-๏ ᴛʜɪs ɪs <a href=https://t.me/LeviXMusicBot>˹ʟᴇᴠɪ ᴍᴜꜱɪᴄ ʙᴏᴛ♪˼ᴺᵒ ᴬᵈˢ </a>
+๏ ᴛʜɪs ɪs <a href=https://t.me/JerryTwoBot> ˹ᴊᴇʀʀʏ ᴛᴡᴏ ʙᴏᴛ˼ </a>
 
 ➻ ᴀ ғᴀsᴛ & ᴘᴏᴡᴇʀғᴜʟ ᴛᴇʟᴇɢʀᴀᴍ ᴍᴜsɪᴄ ᴘʟᴀʏᴇʀ ʙᴏᴛ ᴡɪᴛʜ sᴏᴍᴇ ᴀᴡᴇsᴏᴍᴇ ғᴇᴀᴛᴜʀᴇs. 
 
@@ -41,7 +41,7 @@ async def keep_running():
                 try:
                     sent = await app.send_photo(
                         chat_id=x,
-                        photo="https://graph.org/file/a43ef8489f060343fba5d.jpg",
+                        photo="https://graph.org/file/053681272a7bfc013963a.jpg",
                         caption=ad,
                         reply_markup=butt,
                     )
