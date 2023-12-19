@@ -2,14 +2,15 @@ import os
 import re
 import textwrap
 
-import random
 import aiofiles
 import aiohttp
-from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps, ImageChops
+from PIL import Image, ImageDraw, ImageEnhance, ImageOps, ImageFilter, ImageFont
+from unidecode import unidecode
 from youtubesearchpython.__future__ import VideosSearch
 
+from AnonXMusic import app
 from config import YOUTUBE_IMG_URL
-from back import files
+
 
 def changeImageSize(maxWidth, maxHeight, image):
     widthRatio = maxWidth / image.size[0]
@@ -20,19 +21,19 @@ def changeImageSize(maxWidth, maxHeight, image):
     return newImage
 
 
-def add_corners(im):
-    bigsize = (im.size[0] * 3, im.size[1] * 3)
-    mask = Image.new('L', bigsize, 0)
-    ImageDraw.Draw(mask).ellipse((0, 0) + bigsize, fill=255)
-    mask = mask.resize(im.size, Image.ANTIALIAS)
-    mask = ImageChops.darker(mask, im.split()[-1])
-    im.putalpha(mask)
+def clear(text):
+    list = text.split(" ")
+    title = ""
+    for i in list:
+        if len(title) + len(i) < 60:
+            title += " " + i
+    return title.strip()
 
 
 async def get_thumb(videoid):
-    anime = random.choice(files)
-    if os.path.isfile(f"cache/{videoid}_{anime}.png"):
-        return f"cache/{videoid}_{anime}.png"
+    if os.path.isfile(f"cache/{videoid}.png"):
+        return f"cache/{videoid}.png"
+
     url = f"https://www.youtube.com/watch?v={videoid}"
     try:
         results = VideosSearch(url, limit=1)
@@ -46,7 +47,7 @@ async def get_thumb(videoid):
             try:
                 duration = result["duration"]
             except:
-                duration = "Unknown"
+                duration = "Unknown Mins"
             thumbnail = result["thumbnails"][0]["url"].split("?")[0]
             try:
                 views = result["viewCount"]["short"]
@@ -64,20 +65,12 @@ async def get_thumb(videoid):
                     await f.write(await resp.read())
                     await f.close()
 
-        
-
         youtube = Image.open(f"cache/thumb{videoid}.png")
-        bg = Image.open(f"back/{anime}.PNG")
         image1 = changeImageSize(1280, 720, youtube)
         image2 = image1.convert("RGBA")
-        background = image2.filter(filter=ImageFilter.BoxBlur(14))
+        background = image2.filter(filter=ImageFilter.BoxBlur(9))
         enhancer = ImageEnhance.Brightness(background)
-        background = enhancer.enhance(0.6)
-
-        image3 = changeImageSize(1280, 720, bg)
-        image5 = image3.convert("RGBA")
-        Image.alpha_composite(background, image5).save(f"cache/temp{videoid}.png")
-
+        background = enhancer.enhance(0.5)
         Xcenter = youtube.width / 2
         Ycenter = youtube.height / 2
         x1 = Xcenter - 250
@@ -85,21 +78,9 @@ async def get_thumb(videoid):
         x2 = Xcenter + 250
         y2 = Ycenter + 250
         logo = youtube.crop((x1, y1, x2, y2))
-        logo.thumbnail((520, 520), Image.ANTIALIAS)
-        logo.save(f"cache/chop{videoid}.png")
-        if not os.path.isfile(f"cache/cropped{videoid}.png"):
-            im = Image.open(f"cache/chop{videoid}.png").convert('RGBA')
-            add_corners(im)
-            im.save(f"cache/cropped{videoid}.png")
-
-        crop_img = Image.open(f"cache/cropped{videoid}.png")
-        logo = crop_img.convert("RGBA")
-        logo.thumbnail((365, 365), Image.ANTIALIAS)
-        width = int((1280 - 999)/ 2)
-        background = Image.open(f"cache/temp{videoid}.png")
-        background.paste(logo, (width + 2, 180), mask=logo)
-
-
+        logo.thumbnail((360, 360), Image.ANTIALIAS)
+        logo = ImageOps.expand(logo, border=13, fill="white")
+        background.paste(logo, (465, 100))
         draw = ImageDraw.Draw(background)
         font = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 45)
         font2 = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 70)
@@ -107,34 +88,24 @@ async def get_thumb(videoid):
         name_font = ImageFont.truetype("AnonXMusic/assets/font.ttf", 30)
         para = textwrap.wrap(title, width=32)
         j = 0
+        draw.text((5, 5), f"TeamJerry", fill="white", font=name_font)
         try:
             if para[0]:
-                draw.text(((1280 - 150)/2, 190), f"{para[0]}", fill="white", stroke_width=1, stroke_fill="white", font=font)
+                text_w, text_h = draw.textsize(f"{para[0]}", font=font)
+                draw.text(((1280 - text_w)/2, 540), f"{para[0]}", fill="white", stroke_width=1, stroke_fill="white", font=font)
             if para[1]:
-                draw.text(((1280 - 150)/2, 240), f"{para[1]}", fill="white", stroke_width=1, stroke_fill="white", font=font)
+                text_w, text_h = draw.textsize(f"{para[1]}", font=font)
+                draw.text(((1280 - text_w)/2, 590), f"{para[1]}", fill="white", stroke_width=1, stroke_fill="white", font=font)
         except:
             pass
-        draw.text(((1280 - 150)/2, 320), f"{channel}  |  {views[:30]}", fill="white", font=arial)
-        draw.text(
-            (565, 400),
-            "00:00",
-            (215, 215, 215),
-            font=arial,
-        )
-        draw.text(
-            (1080, 400),
-            f"{duration[:30]}",
-            (215, 215, 215),
-            font=arial,
-        )
-
-
+        text_w, text_h = draw.textsize(f"Duration: {duration} Mins", font=arial)
+        draw.text(((1280 - text_w)/2, 660), f"Duration: {duration} Mins", fill="white", font=arial)
         try:
             os.remove(f"cache/thumb{videoid}.png")
         except:
             pass
-        background.save(f"cache/q{videoid}_{anime}.png")
-        return f"cache/q{videoid}_{anime}.png"
+        background.save(f"cache/{videoid}.png")
+        return f"cache/{videoid}.png"
     except Exception as e:
         print(e)
         return YOUTUBE_IMG_URL
