@@ -1,25 +1,20 @@
-from datetime import datetime
-
 from pyrogram import filters
 from pyrogram.types import Message
 
-from config import BANNED_USERS, PING_IMG_URL
+from config import BANNED_USERS
 from AnonXMusic import app
 from AnonXMusic.utils import bot_sys_stats
-from AnonXMusic.utils.decorators.language import language
+from AnonXMusic.core.userbot import assistants
+from AnonXMusic.utils.database import get_active_chats
 
-from AnonXMusic.utils.database import get_active_chats, get_active_video_chats
 
 @app.on_message(
-    filters.command("respondtostatusbotbaby") & filters.private & ~BANNED_USERS
+    filters.command("respondtostatuschecker") & filters.private & ~BANNED_USERS
 )
-async def respondtobomt(client, message: Message):
-    UP, CPU, RAM, DISK = await bot_sys_stats()
-    if "%" in CPU:
-        CPU = CPU.replace("%", "")
-    if "%" in DISK:
-        DISK = DISK.replace("%", "")
-    active_voice = len(await get_active_chats())
-    active_video = len(await get_active_video_chats())
-    x = f"{DISK}_+_{CPU}_+_{UP}_+_{active_voice}_+_{active_video}"
-    await message.reply_text(x)  
+async def respond(_, message: Message):
+    get = await bot_sys_stats()
+    assnum = ""
+    for x in assistants:
+        assnum += "✨ "
+    active_vc = len(await get_active_chats())
+    await message.reply_text(f"{get[0]}~{get[1]}~{active_vc}~{assnum}")
