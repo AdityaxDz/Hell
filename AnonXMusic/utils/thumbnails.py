@@ -110,6 +110,12 @@ async def get_thumb(videoid: str):
             (255, 255, 255),
             font=arial,
         )
+        draw.line(
+             [(565, 350), (765, 350)],
+             fill="white",
+             width=5,
+             joint="curve",
+        )
         draw.text(
             (565, 400),
             "00:00",
