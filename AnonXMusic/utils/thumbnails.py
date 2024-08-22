@@ -16,30 +16,8 @@ def changeImageSize(maxWidth, maxHeight, image):
     newImage = image.resize((newWidth, newHeight))
     return newImage
 
-def truncate(text):
-    list = text.split(" ")
-    text1 = ""
-    text2 = ""    
-    for i in list:
-        if len(text1) + len(i) < 30:        
-            text1 += " " + i
-        elif len(text2) + len(i) < 30:       
-            text2 += " " + i
-
-    text1 = text1.strip()
-    text2 = text2.strip()     
-    return [text1, text2]
-
-def random_color():
+def rand_color():
     return (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-
-def add_border(image, border_width, border_color):
-    width, height = image.size
-    new_width = width + 2 * border_width
-    new_height = height + 2 * border_width
-    new_image = Image.new("RGBA", (new_width, new_height), border_color)
-    new_image.paste(image, (border_width, border_width))
-    return new_image
 
 async def get_thumb(videoid: str):
     if os.path.isfile(f"cache/{videoid}.png"):
@@ -83,6 +61,17 @@ async def get_thumb(videoid: str):
         background = image2.filter(filter=ImageFilter.BoxBlur(12))
         enhancer = ImageEnhance.Brightness(background)
         background = enhancer.enhance(0.5)
+
+        Xcenter = youtube.width / 2
+        Ycenter = youtube.height / 2
+        x1 = Xcenter - 250
+        y1 = Ycenter - 250
+        x2 = Xcenter + 250
+        y2 = Ycenter + 250
+        logo = youtube.crop((x1, y1, x2, y2))
+        logo.thumbnail((520, 520), Image.ANTIALIAS)
+        logo = ImageOps.expand(logo, border=15, fill=rand_color())
+        background.paste(logo, (120, 160))
 
         #background = Image.blend(background, gradient_image, alpha=0.2)
         draw = ImageDraw.Draw(background)
