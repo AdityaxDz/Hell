@@ -123,7 +123,7 @@ async def get_thumb(videoid: str):
             font=arial,
         )
         picons = icons.resize((580, 62))
-        background.paste(picons, (565, 450))
+        background.paste(picons, (565, 450), picons)
 
         try:
             os.remove(f"cache/thumb{videoid}.png")
