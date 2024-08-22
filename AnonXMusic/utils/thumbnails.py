@@ -4,7 +4,7 @@ import random
 import aiohttp
 import aiofiles
 
-from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont
+from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 from youtubesearchpython.__future__ import VideosSearch
 
 
@@ -20,8 +20,8 @@ def rand_color():
     return (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
 async def get_thumb(videoid: str):
-    if os.path.isfile(f"cache/{videoid}.png"):
-        return f"cache/{videoid}.png"
+    #if os.path.isfile(f"cache/{videoid}.png"):
+    #    return f"cache/{videoid}.png"
 
     url = f"https://www.youtube.com/watch?v={videoid}"
     try:
