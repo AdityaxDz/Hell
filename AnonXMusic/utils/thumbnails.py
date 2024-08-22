@@ -19,6 +19,16 @@ def changeImageSize(maxWidth, maxHeight, image):
 def rand_color():
     return (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
+def truncate(text):
+    list = text.split(" ")
+    text1, text2 = "", ""
+    for i in list:
+        if len(text1) + len(i) < 30:        
+            text1 += " " + i
+        elif len(text2) + len(i) < 30:       
+            text2 += " " + i
+    return [text1.strip(), text2.strip()]
+
 async def get_thumb(videoid: str):
     #if os.path.isfile(f"cache/{videoid}.png"):
     #    return f"cache/{videoid}.png"
@@ -55,6 +65,8 @@ async def get_thumb(videoid: str):
                     )
                     await f.write(await resp.read())
                     await f.close()
+
+        icons = Image.open("AnonXMusic/assets/icons.png")
         youtube = Image.open(f"cache/thumb{videoid}.png")
         image1 = changeImageSize(1280, 720, youtube)
         image2 = image1.convert("RGBA")
@@ -73,30 +85,44 @@ async def get_thumb(videoid: str):
         logo = ImageOps.expand(logo, border=20, fill=rand_color())
         background.paste(logo, (100, 150))
 
-        #background = Image.blend(background, gradient_image, alpha=0.2)
         draw = ImageDraw.Draw(background)
         arial = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 30)
         font = ImageFont.truetype("AnonXMusic/assets/font.ttf", 30)
-        title_font = ImageFont.truetype("AnonXMusic/assets/font3.ttf", 45)
+        tfont = ImageFont.truetype("AnonXMusic/assets/font3.ttf", 45)
 
-
-        #circle_thumbnail = crop_center_circle(youtube, 400, 20, start_gradient_color)
-        #circle_thumbnail = circle_thumbnail.resize((400, 400))
-        #circle_position = (120, 160)
-        #background.paste(circle_thumbnail, circle_position, circle_thumbnail)
-
-        #text_x_position = 565
-        #title1 = truncate(title)
-        #draw_text_with_shadow(background, draw, (text_x_position, 180), title1[0], title_font, (255, 255, 255))
-        #draw_text_with_shadow(background, draw, (text_x_position, 230), title1[1], title_font, (255, 255, 255))
-        #draw_text_with_shadow(background, draw, (text_x_position, 320), f"{channel}  |  {views[:23]}", arial, (255, 255, 255))
-
-        #draw_text_with_shadow(background, draw, (text_x_position, 400), "00:00", arial, (255, 255, 255))
-        #draw_text_with_shadow(background, draw, (1080, 400), duration, arial, (255, 255, 255))
-
-        #play_icons = Image.open("AnonXMusic/assets/play_icons.png")
-        #play_icons = play_icons.resize((580, 62))
-        #background.paste(play_icons, (text_x_position, 450), play_icons)
+        stitle = truncate(title)
+        draw.text(
+            (565, 180),
+            stitle[0],
+            (255, 255, 255),
+            font=tfont,
+        )
+        draw.text(
+            (565, 230),
+            stitle[1],
+            (255, 255, 255),
+            font=tfont,
+        )
+        draw.text(
+            (565, 320),
+            f"{channel} | {views[:23]}",
+            (255, 255, 255),
+            font=arial,
+        )
+        draw.text(
+            (565, 400),
+            "00:00",
+            (255, 255, 255),
+            font=arial,
+        )
+        draw.text(
+            (1080, 400),
+            f"{duration[:23]}",
+            (255, 255, 255),
+            font=arial,
+        )
+        picons = icons.resize((580, 62))
+        background.paste(picons, (565, 450))
 
         try:
             os.remove(f"cache/thumb{videoid}.png")
