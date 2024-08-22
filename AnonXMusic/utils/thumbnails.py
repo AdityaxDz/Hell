@@ -69,7 +69,7 @@ async def get_thumb(videoid: str):
         x2 = Xcenter + 250
         y2 = Ycenter + 250
         logo = youtube.crop((x1, y1, x2, y2))
-        logo.thumbnail((400, 400), Image.ANTIALIAS)
+        logo.thumbnail((370, 370), Image.ANTIALIAS)
         logo = ImageOps.expand(logo, border=20, fill=rand_color())
         background.paste(logo, (100, 150))
 
