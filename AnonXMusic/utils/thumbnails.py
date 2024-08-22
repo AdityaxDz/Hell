@@ -17,9 +17,6 @@ def changeImageSize(maxWidth, maxHeight, image):
     newImage = image.resize((newWidth, newHeight))
     return newImage
 
-def rand_color():
-    return (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-
 def truncate(text):
     list = text.split(" ")
     text1, text2 = "", ""
@@ -71,7 +68,7 @@ async def get_thumb(videoid: str):
         youtube = Image.open(f"cache/thumb{videoid}.png")
         image1 = changeImageSize(1280, 720, youtube)
         image2 = image1.convert("RGBA")
-        background = image2.filter(filter=ImageFilter.BoxBlur(12))
+        background = image2.filter(filter=ImageFilter.BoxBlur(17))
         enhancer = ImageEnhance.Brightness(background)
         background = enhancer.enhance(0.5)
 
@@ -81,9 +78,10 @@ async def get_thumb(videoid: str):
         y1 = Ycenter - 250
         x2 = Xcenter + 250
         y2 = Ycenter + 250
+        rand = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         logo = youtube.crop((x1, y1, x2, y2))
         logo.thumbnail((370, 370), Image.ANTIALIAS)
-        logo = ImageOps.expand(logo, border=20, fill=rand_color())
+        logo = ImageOps.expand(logo, border=20, fill=rand)
         background.paste(logo, (100, 150))
 
         draw = ImageDraw.Draw(background)
@@ -116,10 +114,16 @@ async def get_thumb(videoid: str):
              width=5,
              joint="curve",
         )
+        draw.line(
+             [(565, 385), (999, 385)],
+             fill=rand,
+             width=5,
+             joint="curve",
+        )
         draw.ellipse(
             [(999, 375), (1020, 395)],
-            outline="white",
-            fill="white",
+            outline=rand,
+            fill=rand,
             width=15,
         )
         draw.text(
