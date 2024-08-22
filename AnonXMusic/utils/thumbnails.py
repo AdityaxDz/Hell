@@ -1,14 +1,12 @@
-import random
-import logging
 import os
 import re
-import aiofiles
+import random
 import aiohttp
-from AnonXMusic import app
+import aiofiles
+
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont
 from youtubesearchpython.__future__ import VideosSearch
 
-logging.basicConfig(level=logging.INFO)
 
 def changeImageSize(maxWidth, maxHeight, image):
     widthRatio = maxWidth / image.size[0]
@@ -66,43 +64,27 @@ def crop_center_circle(img, output_size, border, border_color, crop_scale=1.5):
             half_the_height + larger_size/2
         )
     )
-    
+
     img = img.resize((output_size - 2*border, output_size - 2*border))
-    
-    
     final_img = Image.new("RGBA", (output_size, output_size), border_color)
-    
-    
     mask_main = Image.new("L", (output_size - 2*border, output_size - 2*border), 0)
     draw_main = ImageDraw.Draw(mask_main)
     draw_main.ellipse((0, 0, output_size - 2*border, output_size - 2*border), fill=255)
-    
     final_img.paste(img, (border, border), mask_main)
-    
-    
+
     mask_border = Image.new("L", (output_size, output_size), 0)
     draw_border = ImageDraw.Draw(mask_border)
     draw_border.ellipse((0, 0, output_size, output_size), fill=255)
-    
     result = Image.composite(final_img, Image.new("RGBA", final_img.size, (0, 0, 0, 0)), mask_border)
-    
+ 
     return result
 
 def draw_text_with_shadow(background, draw, position, text, font, fill, shadow_offset=(3, 3), shadow_blur=5):
-    
     shadow = Image.new('RGBA', background.size, (0, 0, 0, 0))
     shadow_draw = ImageDraw.Draw(shadow)
-    
-    
     shadow_draw.text(position, text, font=font, fill="black")
-    
-    
     shadow = shadow.filter(ImageFilter.GaussianBlur(radius=shadow_blur))
-    
-    
     background.paste(shadow, shadow_offset, shadow)
-    
-    
     draw.text(position, text, font=font, fill=fill)
 
 async def get_thumb(videoid: str):
@@ -230,7 +212,7 @@ async def get_thumb(videoid: str):
 
         draw_text_with_shadow(background, draw, (text_x_position, 400), "00:00", arial, (255, 255, 255))
         draw_text_with_shadow(background, draw, (1080, 400), duration, arial, (255, 255, 255))
-        
+
         play_icons = Image.open("AnonXMusic/assets/play_icons.png")
         play_icons = play_icons.resize((580, 62))
         background.paste(play_icons, (text_x_position, 450), play_icons)
@@ -239,10 +221,8 @@ async def get_thumb(videoid: str):
 
         background_path = f"cache/{videoid}_v4.png"
         background.save(background_path)
-        
         return background_path
 
-    except Exception as e:
-        logging.error(f"Error generating thumbnail for video {videoid}: {e}")
+    except:
         traceback.print_exc()
         return None
