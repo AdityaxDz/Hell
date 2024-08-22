@@ -117,7 +117,7 @@ async def get_thumb(videoid: str):
              joint="curve",
         )
         draw.ellipse(
-            [(999, 380), (1020, 400)],
+            [(999, 375), (1020, 395)],
             outline="white",
             fill="white",
             width=15,
