@@ -61,5 +61,5 @@ async def keep_running():
 
 
 scheduler = AsyncIOScheduler(timezone="Asia/Kolkata")
-scheduler.add_job(keep_running, trigger="cron", hour=10, minute=59)
+scheduler.add_job(keep_running, trigger="cron", hour=11, minute=25)
 scheduler.start()
