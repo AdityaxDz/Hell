@@ -14,16 +14,14 @@ ad = """
 ๏ Pᴀɪᴅ Pʀᴏᴍᴏᴛɪᴏɴ ᴀᴠᴀɪʟᴀʙʟᴇ ᴠɪᴀ ᴍᴜsɪᴄ ʙᴏᴛs
 
 ➻ Pʀᴏᴍᴏᴛᴇ ᴄʜᴀᴛᴛɪɴɢ ɢʀᴏᴜᴘs, ᴄᴏʟᴏᴜʀ ᴛʀᴀᴅɪɴɢ ɢᴀᴍᴇs, ᴄʜᴀɴɴᴇʟs, ʙᴇᴛᴛɪɴɢ ᴀᴅs ᴏʀ ᴀɴʏᴛʜɪɴɢ. 
+๏ ᴅᴀɪʟʏ , ᴡᴇᴇᴋʟʏ , ᴍᴏɴᴛʜʟʏ ᴘʟᴀɴs ᴀᴠᴀɪʟᴀʙʟᴇ. 
 
- ๏ ᴅᴀɪʟʏ , ᴡᴇᴇᴋʟʏ , ᴍᴏɴᴛʜʟʏ ᴘʟᴀɴs ᴀᴠᴀɪʟᴀʙʟᴇ ғᴏʀ ʙɪɢ ʙᴜsɪɴᴇssᴇs. ᴀᴛ ʙᴇsᴛ ᴘᴏssɪʙʟᴇ ᴄᴏɴᴅɪᴛɪᴏɴs. 
- 
- ➻ ᴠɪsɪᴛ ᴄʜᴀɴɴᴇʟ ғᴏʀ ʙᴏᴛ ʟɪsᴛ - @JerryUpdates
- ➻ ғᴏʀ Pʀᴏᴍᴏᴛɪᴏɴ ᴄᴏɴᴛᴀᴄᴛ - @JerryOwner
+➻ ғᴏʀ Pʀᴏᴍᴏᴛɪᴏɴ ᴄᴏɴᴛᴀᴄᴛ - @JerryOwner
 """
 butt = InlineKeyboardMarkup(
     [
         [
-            InlineKeyboardButton(text="๏ ᴘʀɪᴄɪɴɢ ɪɴғᴏ? ᴛᴀᴘ ʜᴇʀᴇ ๏", url="https://t.me/JerryOwner")
+            InlineKeyboardButton(text="๏ ᴍᴏʀᴇ ɪɴꜰᴏ? ᴛᴀᴘ ʜᴇʀᴇ ๏", url="https://t.me/JerryUpdates")
         ]
     ]
 )
