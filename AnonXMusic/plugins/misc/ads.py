@@ -11,12 +11,12 @@ from AnonXMusic.utils.database import get_served_chats
 
 
 ad = """
-๏ Pᴀɪᴅ Pʀᴏᴍᴏᴛɪᴏɴ ᴀᴠᴀɪʟᴀʙʟᴇ ᴠɪᴀ ᴍᴜsɪᴄ ʙᴏᴛs
+<u> ๏ Pᴀɪᴅ Pʀᴏᴍᴏᴛɪᴏɴs ᴀᴠᴀɪʟᴀʙʟᴇ </u>
 
 ➻ Pʀᴏᴍᴏᴛᴇ ᴄʜᴀᴛᴛɪɴɢ ɢʀᴏᴜᴘs, ᴄᴏʟᴏᴜʀ ᴛʀᴀᴅɪɴɢ ɢᴀᴍᴇs, ᴄʜᴀɴɴᴇʟs, ʙᴇᴛᴛɪɴɢ ᴀᴅs ᴏʀ ᴀɴʏᴛʜɪɴɢ. 
 ๏ ᴅᴀɪʟʏ , ᴡᴇᴇᴋʟʏ , ᴍᴏɴᴛʜʟʏ ᴘʟᴀɴs ᴀᴠᴀɪʟᴀʙʟᴇ. 
 
-➻ ғᴏʀ Pʀᴏᴍᴏᴛɪᴏɴ ᴄᴏɴᴛᴀᴄᴛ - @JerryOwner
+➻ Pʀɪᴄɪɴɢ ᴅᴇᴛᴀɪʟꜱ: @JerryOwner
 """
 butt = InlineKeyboardMarkup(
     [
