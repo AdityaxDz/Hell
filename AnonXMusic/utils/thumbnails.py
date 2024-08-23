@@ -109,7 +109,7 @@ async def get_thumb(videoid: str):
             font=arial,
         )
         draw.line(
-             [(565, 385), (1200, 385)],
+             [(565, 385), (1100, 385)],
              fill="white",
              width=8,
              joint="curve",
