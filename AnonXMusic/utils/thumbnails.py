@@ -68,9 +68,9 @@ async def get_thumb(videoid: str):
         youtube = Image.open(f"cache/thumb{videoid}.png")
         image1 = changeImageSize(1280, 720, youtube)
         image2 = image1.convert("RGBA")
-        background = image2.filter(filter=ImageFilter.BoxBlur(28))
+        background = image2.filter(filter=ImageFilter.BoxBlur(20))
         enhancer = ImageEnhance.Brightness(background)
-        background = enhancer.enhance(0.8)
+        background = enhancer.enhance(0.6)
 
         Xcenter = youtube.width / 2
         Ycenter = youtube.height / 2
@@ -83,6 +83,11 @@ async def get_thumb(videoid: str):
         logo.thumbnail((370, 370), Image.ANTIALIAS)
         logo = ImageOps.expand(logo, border=17, fill=rand)
         background.paste(logo, (100, 150))
+
+        start_gradient_color = random_color()
+        end_gradient_color = random_color()
+        gradient_image = generate_gradient(1280, 720, start_gradient_color, end_gradient_color)
+        background = Image.blend(background, gradient_image, alpha=0.2)
 
         draw = ImageDraw.Draw(background)
         arial = ImageFont.truetype("AnonXMusic/assets/font2.ttf", 30)
