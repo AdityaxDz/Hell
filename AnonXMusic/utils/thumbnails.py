@@ -81,7 +81,7 @@ async def get_thumb(videoid: str):
         rand = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         logo = youtube.crop((x1, y1, x2, y2))
         logo.thumbnail((370, 370), Image.ANTIALIAS)
-        logo = ImageOps.expand(logo, border=20, fill=rand)
+        logo = ImageOps.expand(logo, border=18, fill=rand)
         background.paste(logo, (100, 150))
 
         draw = ImageDraw.Draw(background)
@@ -111,13 +111,13 @@ async def get_thumb(videoid: str):
         draw.line(
              [(565, 385), (1200, 385)],
              fill="white",
-             width=5,
+             width=7,
              joint="curve",
         )
         draw.line(
              [(565, 385), (999, 385)],
              fill=rand,
-             width=5,
+             width=7,
              joint="curve",
         )
         draw.ellipse(
