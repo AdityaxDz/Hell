@@ -68,9 +68,9 @@ async def get_thumb(videoid: str):
         youtube = Image.open(f"cache/thumb{videoid}.png")
         image1 = changeImageSize(1280, 720, youtube)
         image2 = image1.convert("RGBA")
-        background = image2.filter(filter=ImageFilter.BoxBlur(25))
+        background = image2.filter(filter=ImageFilter.BoxBlur(28))
         enhancer = ImageEnhance.Brightness(background)
-        background = enhancer.enhance(0.5)
+        background = enhancer.enhance(0.8)
 
         Xcenter = youtube.width / 2
         Ycenter = youtube.height / 2
@@ -81,7 +81,7 @@ async def get_thumb(videoid: str):
         rand = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         logo = youtube.crop((x1, y1, x2, y2))
         logo.thumbnail((370, 370), Image.ANTIALIAS)
-        logo = ImageOps.expand(logo, border=18, fill=rand)
+        logo = ImageOps.expand(logo, border=17, fill=rand)
         background.paste(logo, (100, 150))
 
         draw = ImageDraw.Draw(background)
@@ -111,13 +111,13 @@ async def get_thumb(videoid: str):
         draw.line(
              [(565, 385), (1200, 385)],
              fill="white",
-             width=7,
+             width=8,
              joint="curve",
         )
         draw.line(
              [(565, 385), (999, 385)],
              fill=rand,
-             width=7,
+             width=8,
              joint="curve",
         )
         draw.ellipse(
