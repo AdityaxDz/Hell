@@ -209,13 +209,13 @@ class YouTubeAPI:
         vidid = link.split("=")[1]
         loop = asyncio.get_running_loop()
 
-        url = "https://api.cobalt.tools/api/json"
+        url = "https://api.cobalt.tool"
         headers = {
             "Accept": "application/json",
             "Content-Type": "application/json"
         }
         data = {
-            "url": link,
+            "url": null,
             "vCodec": "h264",
             "vQuality": "720",
             "aFormat": "mp3",
